@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>The Elusive Sine Function</title>
+    <link rel="stylesheet" href="styles.css">
+    <!--Linking the JSXGraph library, for interactive visualizations-->
+    <script type="text/javascript" charset="UTF-8" src="JSXGraph/jsxgraphcore.js"></script>
+    <link rel="stylesheet" type="text/css" href="JSXGraph/jsxgraph.css" />
+    <!--Linking to MathJax, for math typing-->    
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script> 
+</head>
+<body>
+    <h1>The Elusive Sine Function</h1>
+    <p class="tiny">An interactive essay by Umed Maru.</p>
+    <p>2024 Strogatz Prize</p>
+    <p id="note"><em>Note: This essay was written to be understandable to anyone with a basic understanding of math, maybe someone in middle school who has yet to take an algebra course, or an interested adult who hasn't taken a math course in many years. Feel free to skip sections you already know. <!--Important words and definitions are <b>bolded,</b> and you can mouse over them to learn more.--> All the graphs and drawings are interactive- drag orange points around and see what happens!</em></p>
+    <p>Learning about the sine function in my 9th grade geometry class, we were taught about how it can be used to find lengths of the sides of right triangles. It seemed like magic- you punch in the angle and <i>ta-da!</i> the function outputs a ratio. I asked my teacher how the calculator actually determines the function, but she couldn't give me a single answer. Thus started my journey- a mathematical adventure which took me across some of the foundational fields of mathematics.</p>
+    <h2>Ways to visualize trigonometric functions</h2>
+    <p>If you have taken a high school level geometry or algebra course, you probably have an idea of what trigonometric functions are. The way I learned, and how most high schoolers learned, was as ratios of sides in a right triangle. The sine of an angle is then the ratio of the corresponding sides in a triangle. For simplicity's sake, all angles are in <b class="info">radians</b>. </p>
+    <!--Interactive right triangle diagram w/sine, cosine, tangent, NO GRAPH-->
+    <p id="triangleSineValue"></p>
+    <div id="sineTriangle" class="jxgbox" style="width:600px; height:300px;"></div>
+    <p>However, for most purposes, and for the purpose of this essay, it is much more useful to think of these functions in terms of the <b class="info">unit circle</b>. Rather than as the ratio of the lengths of a right triangle, instead sine and cosine are the coordinates of the point on a circle corresponding with the angle.</p>
+    <!--Interactive unit circle trigonometric diagrams, INCLUDE GRAPH-->
+    <p id="circleSineValue">$$A(x,y)=A(\cos(1.11),\sin(1.11))=A(0.44,0.89)$$</p>
+    <div>
+        <div id="sineCircle" class="jxgbox inlineDiv" style="width:300px; height:300px;"></div>
+        <div id="circleWave" class="jxgbox inlineDiv" style="width:600px; height:300px"></div>
+    </div>
+    <p>One last thing- notice the graph up there? That's the iconic sine wave. There's some interesting things to look at there, but I think one of the most interesting things about sinusoidal functions is the end behaviour. Most basic functions in high-school level math <i>approach</i> something, be it infinity or an asymptote. What's special about sinusoidal functions is that they oscillate around zero. No matter now far on the x axis you go, extending to infinity, it repeats again and again.</p>
+    <h2>The Taylor Series</h2>
+    <p>The first, and simplest method I stumbled apon to get an approximation of the sine function is the Taylor Series. The Taylor series is a way to approximate any curve as a polynomial function, which are much easier to work with. The more terms you add to the Taylor series, the closer the approximation gets.</p>
+    <p>To understand the Taylor Series, we need to learn a little calculus. Don't be intimidated- what we are learning is going to be the very basics, just enough to understand this concept.</p>
+    <p>Let's start with the concept of the derivative. In its most raw meaning, the derivative is the instantaneous rate of change of a function. Let's break that down a little. I like to think of this concept in terms of something in the real world, so for our purposes the words "rate of change" is the velocity of something in the real world, like a car.</p>
+    <!--d/t graph w/ glider, mapping on to its derivative, a v/t graph-->
+    <div>
+        <div id="dOverT1" class="jxgbox inlineDiv" style="width:300px; height:300px"></div>
+        <div id="vOverT1" class="jxgbox inlineDiv" style="width:300px; height:300px"></div>
+    </div>
+    <p>What's makes no sense about derivatives is that the very <em>definition</em> of velocity and rate of change requires two values.</p>
+    <p>$$v = \frac{\Delta y}{\Delta x} = \frac{y_{2}-y_{1}}{x_{2}-x_{1}}$$</p>
+    <p>So how can the derivative be an <em>instantaneous</em> rate of change? Well, the fathers of calculus thought this through, and decided the best way to find the instantaneous rate of change is to find what the rate of change <em>approaches</em> as the difference between \(y_{2}\) and \(y_{1}\) gets smaller and smaller. For curves, I like to think of the derivative at any given point as the slope of the <b class="info">tangent</b> line.</p>
+    <p>For the Taylor Series, the other concept we need to know is the nth derivative. In our car example, the derivative of the distance is the velocity. In this example, the second derivative of the distance is the acceleration- which is the derivative of velocity. In physics, the 3rd, 4th, 5th, and 6th derivatives of our distance graphs are called jerk, snap, crackle, and pop. Although snap, crackle, and pop aren't used too much (except in popular cereal brands), jerk is important for engineers trying to reduce whiplash on, say, a rollercoaster ride.</p>
+    <!--d/t maps to v/t maps to a/t maps to j/t maps to s/t maps to c/t maps to p/t-->
+    <p>The Taylor series utilizes derivatives to the nth power to approximate a function near a given value. Lets get an approximation of sine using the Taylor series. First, we take the value of the function in the area we want to approximate near, \(a\). For now, lets get the value of sine near 0. Because sine's value at 0 is 0, lets start with \(f(x)=0\). Then, we add the derivative of that function, in terms of \(x^{1}\), in order to change the slope of that function near that value(recall that the derivative is essentially the tangent slope of our function). The derivative of sine is cosine, and \(\cos(0)=1\), so our function becomes \(f(x)=0+x\), or just \(f(x)=x\). Then, to ensure that the slope <em>changes</em> at the same rate of our function, we add the second derivative of our function in terms of \(x^{2}\). The second derivative of sine is negative sine, and because \(-\sin(0)=0\), we can remove the second term. Then, our third derivative will be \(-\cos(0)=-1\), so we can make our function \(f(x)=x-x^{3}\).</p>
+    <p>We've run into a problem here. By slapping on derivative after derivative, we've lost sight of our approximation. We need the nth derivatives of our approximation to <em>match</em> the nth derivative of our actual function! There's some calculus here that's a bit out of the scope of this essay, but I encourage you to think through why we need to divide the third term of this function by 6 for the nth derivatives to match. We can follow the pattern, but at the 5th derivative we find ourselves dividing by 120! You might notice what's going on, and its actually factorials. \(6=3!\), and \(120=5!\). Even our first term is divided by \(1!\), which is just 1.</p>
+    <p>We now can expand this to see our sine approximation using the Taylor series:</p>
+    <p>$$x-\frac{x^{3}}{3!}+\frac{x^{5}}{5!}-\frac{x^{7}}{7!}...$$</p>
+    <p>And, if you've been paying close attention, we can also see a more general form of the Taylor Series, near \(a\). \(f(x)\) is the function we are approximating, and each tick mark is the nth derivative of that function, so \(f'(x)\) is the derivative, \(f''(x)\) is the second derivative, and so on.</p>
+    <p>$$f(a)+\frac{f'(a)}{1!}(x-a)+\frac{f''(a)}{2!}(x-a)^{2}+\frac{f'''(a)}{3!}(x-a)^{3}+\frac{f''''(a)}{3!}(x-a)^{3}...$$</p>
+    <p>That was a lot, so feel free to reread and think it over. If you are still confused, perhaps a visual example will help.</p>
+    <!--Taylor series graph-->
+    <p id="taylorFunction">$$f(x)=x-\frac{x^{3}}{3!}$$</p>
+    <div id="taylor" class="jxgbox" style="width:800px; height:300px;"></div>
+    <p>For many functions, adding on to the Taylor Series will only make the approximation valuable at area you originally wanted the Taylor series to be approximating near. But, for some functions, like sine and cosine, adding to the Taylor series actually gets closer to the sine function.</p>
+    <h2>The CORDIC Algorithm</h2>
+    <p>Most advanced computers nowadays actually <em>do</em> use the Taylor Series to calculate sine. But the problem with the Taylor Series is that they require a <em>lot</em> of multiplication. One thing that older computers and handheld calculators don't do very fast is multiplication, because they have to repeatedly add numbers, and each addition step takes time. When you are multiplying numbers as complicated as in the Taylor Series, it adds up. The way these computers calculate trigonometric functions, and actually lots of other functions, like logarithms and square roots, is using the CORDIC algorithm. CORDIC stands for <em>CO</em>ordinate <em>R</em>otation <em>DI</em>gital <em>C</em>omputer. Despite the underwhelming acronuym, it's an ingeneous solution that utilizes some of the most useful and interesting fields of math, like complex numbers and binary math.</p>
+    <p>Before I explain how CORDIC works, though, we need to understand how complex numbers and the complex plane work. For starters, a complex number is a combination of <b class="info">imaginary numbers</b> and <b class="info">real numbers</b>, expressed in the form \(a+bi\). The complex plane places these complex numbers on the coordinate plane, with \(a\) being the x axis, and \(b\) being the y axis.</p>
+    <!--complex plane, drag point outputs complex number-->
+    <p>$$A(x,y)=A(a,b)$$</p>
+    <p id="complexIntroValue">$$A=a+bi=1+1i$$</p>
+    <div id="complexIntro" class="jxgbox" style="width:400px; height:400px;"></div>
+    <p>What you might not have learned in school are the very useful properties of the complex plane. Points on the complex plane aren't only referred to in their \(a+bi\) form. They can also be written in polar form. Imagine drawing a line between the complex point and the origin. Polar form writes complex numbers as \(re^{i\theta}\), where \(r\) is the <b class="info">magnitude</b> of our line and \(\theta\) is the angle the line makes with the right side of the x axis (\(e\) is <b class="info">Euler's number</b>). When one multiplies two complex numbers together, the result multiplies the magnitudes and adds the angles. And , when you multiply by the </p>
+    <!--multiplying complex numbers on the complex plane-->
+    <p>$$A \cdot B=C$$</p>
+    <p id="multiplyA+bi">$$(2.0+1.0i) \cdot (1.0+2.0i)=(0.0+5.0i)$$</p>
+    <p id="multiplyPolar">$$2.2e^{0.5i} \cdot 2.2e^{1.1i}=5.0e^{1.6i}$$</p>
+    <div id="complexMultiply" class="jxgbox" style="width:400px; height:400px;"></div>
+    <p>For those who are interested on <em>why</em> this works, it's related to something called Euler's identity(\(e^{\pi i}+1=0\)). I'll put resources in the further reading section.</p>
+    <p>Great, so now we can rotate numbers by set values, just by multiplying together complex numbers. Where do we go from here? Because we want to rotate to a specific angle, to get there, the CORDIC algorithm rotates by smaller and smaller steps(aka, multiplies by complex numbers with smaller and smaller \(\theta\) values), rotating forwards if we went over, and rotating backwards if we went under.</p>
+    <p>Careful readers should have noticed something is missing. The whole point of the CORDIC algorithm is to prevent excess multiplication, to optimize for computers. Yet all we've done so far is multiply complex numbers. To understand how CORDIC can avoid multiplying, we're going to have to understand how computers do math.</p>
+    <p>Computers use transistors to do all their operations. Transistors have two states, 0 and 1, and are essentially tiny wells that can either have electrons or not. So all data and operations in a computer are in base 2, or binary. Our most common number system, the arabic number system, is in base 10, with 10 digits, from 0 to 9. Once we hit 9, we cycle back to 1 and shift it one digit over to the left, adding in a zero. Then whenever we run out of digits again, we shift again. Each time we shift, we multiply by 10. The same system works for binary. So, the number 23 in binary would be 11101.</p>
+    <table id="binary">
+        <tr>
+            <td>Binary Number</td>
+            <td>1</td>
+            <td>1</td>
+            <td>1</td>
+            <td>0</td>
+            <td>1</td>
+        </tr>
+        <tr>
+            <td>Place(\(2^{n}\))</td>
+            <td>\(2^{0}\)</td>
+            <td>\(2^{1}\)</td>
+            <td>\(2^{2}\)</td>
+            <td>\(2^{3}\)</td>
+            <td>\(2^{4}\)</td>
+        </tr>
+        <tr>
+            <td>Place(\(n\))</td>
+            <td>1</td>
+            <td>2</td>
+            <td>4</td>
+            <td>8</td>
+            <td>16</td>
+        </tr>
+    </table>
+    <p>\(1+2+4+0+16=23\)</p>
+    <p>Do you see what we can do? By multiplying only in powers of two, all we have to do is "shift" the binary numbers, so the computer doesn't have to repeatedly add numbers to multiply. Each time we rotate our number, we just multiply by \(1+1i\), then \(1+\frac{1}{2}i\), then \(1+\frac{1}{4}i\), \(1+\frac{1}{8}i\), and so on.</p>
+    <p>Once we have rotated the complex number, we scale it back to an \(r\) value of 1, and the coordinates of our new points give us sine and cosine! We multiply the coordinates by a number that converges on about 0.607 as we add more and more iterations.</p>
+    <!--CORDIC algorithm in action, animation with steps-->
+    <label for="targetValue">Target Angle(radians, 0 to 2\(\pi\))</label>
+    <input type="text" id="targetValue" name="targetValue">
+    <button id="run">Run CORDIC</button>
+    <p id="rinfo">$$ <span id="results"></span> $$</p>
+    <div id="CORDIC" class="jxgbox" style="width:400px;height:400px;"></div>
+    <p>Quick disclaimer: The CORDIC algorithm can actually be executed through a few different methods. I discuss using the complex plane, but you can also use a vector rotation matrix. I find that to be a lot less interesting, but you can find more about that in the further reading section.</p>
+    <!--<h2>One Last Thing</h2>
+    <p>Everything we've considered so far output approximations. Say you wanted to get the <em>exact</em> value of sine for any value, lets say a degree. Believe it or not, this is actually possible for a lot of values. To start, there are a few simple exact values that can </p>
+    <p> Explain sine half identity, double identity, so on.</p> -->
+    <h2>Conclusion</h2>
+    <p>Math can often seem uninteresting or useless in school, but looking deeper into different mathematical concepts can reveal the creativity and ingenuity of math.</p>
+    <p>I hope following my journey brought you some <em>aha!</em> moments or deepened your understanding of a topic you might have been struggling with. Thanks for reading!</p>
+    <h2>Further Reading</h2>
+    <ol>
+        <li>An intuitive video explanation of the Taylor Series - : <a href="https://youtu.be/3d6DsjIBzJ4?si=TWrQPP-gcip7kxRn">Taylor series | Chapter 11, Essence of calculus</a>.</li>
+        <li>Euler was the most prolific mathemetician ever. You should read up on him, I like <a href="https://en.wikipedia.org/wiki/Leonhard_Euler">Wikipedia</a> as a starting point. There's a saying that most mathematical theorums are named after the second person who discovered it, because Euler was the almost always the first.</li>
+        <li>Euler's sine product formula is another definition of sine I stumbled apon but couldn't fit into here. Here's a very difficult-to-understand(for high schoolers) <a href="https://www.researchgate.net/publication/323296523_Euler's_Sine_Product_Formula_An_Elementary_Proof">proof</a> of it.</li>
+        <li>Euler's Identity is often considered the most beautiful mathematical formula. Read up on it on <a href="https://en.wikipedia.org/wiki/Euler%27s_identity">Wikipedia</a>, or watch on <a href="https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.khanacademy.org/math/ap-calculus-bc/bc-series-new/bc-10-14/v/euler-s-formula-and-euler-s-identity&ved=2ahUKEwiV35GFq9yFAxVAF1kFHTtsCG4QtwJ6BAgyEAI&usg=AOvVaw37PnmHlxtatG1t88LH5KCz">Khan Academy</a></li>
+        <li><a href="https://en.wikipedia.org/wiki/CORDIC">Wikipedia</a> has a pretty good explanation of CORDIC(with a rotation matrix), or check out this intuitive <a href="https://youtu.be/bre7MVlxq7o?si=2K_wwcekhZKBluP1">Youtube Video</a>. If you want to program your own, check out <a href="https://dspguru.com/dsp/faqs/cordic/">this article</a>.</li>
+    </ol>
+    <script src="visuals.js"></script>
+    <div class="def" id="radians">An angle in radians is the ratio of the radius of a circle to the arc the angle intercepts. There are \(2 \pi \) radians in a circle, so \(\pi\) radians is equal to \(180 &deg; \).</div>
+    <div class="def" id="unitCircle">The unit circle is a circle with radius 1.</div>
+    <div class="def" id="tangent">A tangent line is the line connecting to a circle or curve to which the line only touches the circle or curve at a single point.</div>
+    <div class="def" id="imaginaryNumbers">\(i\), the imaginary number is the equivalent of \( \sqrt{-1} \), and thus \(i^{2}=-1\).</div>
+    <div class="def" id="realNumbers">Real numbers are all numbers, irrational, integers, etc. that are not imaginary.</div>
+    <div class="def" id="magnitude">The magnitude of a vector is its length from the origin.</div>
+    <div class="def" id="eulersNumber">Euler's Number(\(e\)) is approximately 2.718 and is a mathematical constant. It is the base of the natural logarithm, and \(e^{x}\) is the derivative of itself.</div>
+</body>
+</html>
