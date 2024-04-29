@@ -362,24 +362,20 @@ button.addEventListener('click', async function(){
     mathJaxClear(rInfo);
 });
 
-
-
-//Bolded definitons
-function showDef(defS,word){
-    let def = document.getElementById(defS);
-    def.style.display = 'block';
-    def.style.position = 'absolute';
-    node.style.left = word.screenX;
-    node.style.top = word.screenY;
+//hover definitions
+function showDef(){
+    for (i=0; i<this.children.length; i++){
+        this.children[i].style.display="block";
+    };
 }
-
-function findDef(node){
-    if(node.innerText == "radians") {
-        showDef("radians", node);
-    }
+function hideDef(){
+    for (i=0; i<this.children.length; i++){
+        this.children[i].style.display="none";
+    };
 }
 
 var defs = document.getElementsByClassName('info');
 for (i=0; i<defs.length; i++) {
-    defs[i].addEventListener('click',findDef(defs[i]));
+    defs[i].addEventListener('mouseover',showDef, false);
+    defs[i].addEventListener('mouseout', hideDef, false);
 }
