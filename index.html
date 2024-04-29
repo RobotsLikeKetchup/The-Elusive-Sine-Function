@@ -15,7 +15,7 @@
     <h1>The Elusive Sine Function</h1>
     <p class="tiny">An interactive essay by Umed Maru.</p>
     <p>2024 Strogatz Prize</p>
-    <p id="note"><em>Note: This essay was written to be understandable to anyone with a basic understanding of math, maybe someone in middle school who has yet to take an algebra course, or an interested adult who hasn't taken a math course in many years. Feel free to skip sections you already know. <!--Important words and definitions are <b>bolded,</b> and you can mouse over them to learn more.--> All the graphs and drawings are interactive- drag orange points around and see what happens!</em></p>
+    <p id="note"><em>Note: This essay was written to be understandable to anyone with a basic understanding of math. Feel free to skip sections you already know. <!--Important words and definitions are <b>bolded,</b> and you can mouse over them to learn more.--> All the graphs and drawings are interactive- drag orange points around and see what happens!</em></p>
     <p>Learning about the sine function in my 9th grade geometry class, we were taught about how it can be used to find lengths of the sides of right triangles. It seemed like magic- you punch in the angle and <i>ta-da!</i> the function outputs a ratio. I asked my teacher how the calculator actually determines the function, but she couldn't give me a single answer. Thus started my journey- a mathematical adventure which took me across some of the foundational fields of mathematics.</p>
     <h2>Ways to visualize trigonometric functions</h2>
     <p>If you have taken a high school level geometry or algebra course, you probably have an idea of what trigonometric functions are. The way I learned, and how most high schoolers learned, was as ratios of sides in a right triangle. The sine of an angle is then the ratio of the corresponding sides in a triangle. For simplicity's sake, all angles are in <b class="info">radians</b>. </p>
@@ -105,7 +105,7 @@
     <label for="targetValue">Target Angle(radians, 0 to 2\(\pi\))</label>
     <input type="text" id="targetValue" name="targetValue">
     <button id="run">Run CORDIC</button>
-    <p id="rinfo">$$ <span id="results"></span> $$</p>
+    <p id="rinfo"></p>
     <div id="CORDIC" class="jxgbox" style="width:400px;height:400px;"></div>
     <p>Quick disclaimer: The CORDIC algorithm can actually be executed through a few different methods. I discuss using the complex plane, but you can also use a vector rotation matrix. I find that to be a lot less interesting, but you can find more about that in the further reading section.</p>
     <!--<h2>One Last Thing</h2>

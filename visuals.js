@@ -298,14 +298,13 @@ var button = document.getElementById('run');
 var results = document.getElementById('results');
 var tVal;
 var rInfo = document.getElementById('rinfo');
-var wi, wis;
+var wi, wis, inTe;
 // CORDIC gain for 5 iterations is 0.607
 button.addEventListener('click', async function(){
     try {
         wi.remove();
         wis.remove();
-        results.innerText = " ";
-        mathJaxClear(results);
+        rInfo.innerText = " ";
         mathJaxClear(rInfo);
     } catch (error) {
         console.log('lets go!');
@@ -313,22 +312,23 @@ button.addEventListener('click', async function(){
     };
     tVal = parseFloat(document.getElementById('targetValue').value);
     if (tVal < 0 || tVal > (2*Math.PI)) {
-        results.innerText = "Please enter a number between 0 and \\(2\\pi\\).";
+        rInfo.innerText = "Please enter a number between 0 and \\(2\\pi\\).";
         mathJaxClear(rInfo);
     } else if (tVal < (Math.PI/2)) { //90 or less
         console.log('90 or less!');
-        results.innerText = "1";
+        inTe = "1";
         wi = cordic.create('point',[1,0],{fixed:true});
     } else if(tVal < (Math.PI)) { //180 or less
-        results.innerText = "i";
+        inTe = "i";
         wi = cordic.create('point',[0,1],{fixed:true});
     } else if(tVal < (3*(Math.PI/2))) { //270 or less
-        results.innerText = "-1";
+        inTe = "-1";
         wi = cordic.create('point',[-1,0],{fixed:true});
     } else { //360 or less
-        results.innerText = "-i";
+        inTe = "-i";
         wi = cordic.create('point',[0,-1],{fixed:true, hasLabel:false});
     };
+    rInfo.innerText = "$$ " + inTe + " $$";
     wis = cordic.create('segment',[[0,0],wi],{createPoints:false});
     var x1, y1, bCoeff, aa, xo, yo;
     x1 = wi.X();
@@ -343,9 +343,9 @@ button.addEventListener('click', async function(){
             xo = x1+(y1*bCoeff);
             yo= -(x1*bCoeff)+y1;
         };
-        results.innerText = results.innerText + "\\cdot (1+\\frac{1}{"+(2**(i-1))+"}i)";
+        inTe = inTe + "\\cdot (1+\\frac{1}{"+(2**(i-1))+"}i)";
+        rInfo.innerText = "$$ " + inTe + " $$"
         mathJaxClear(rInfo);
-        mathJaxClear(results);
         await new Promise(done=>{
             wi.moveTo([xo,yo],500,{callback:() => {done()}});
         });
@@ -356,7 +356,8 @@ button.addEventListener('click', async function(){
     xo = xo*0.607;
     yo = yo*0.607;
     wi.moveTo([xo,yo],500,{});
-    results.innerText= "(" + results.innerText + ") \\cdot 0.607 = (" + JXG.toFixed(xo, 3) + "+" + JXG.toFixed(yo, 3) + "i)";
+    inTe = "(" + inTe + ") \\cdot 0.607 = (" + JXG.toFixed(xo, 3) + "+" + JXG.toFixed(yo, 3) + "i)";
+    rInfo.innerText = "$$ " + inTe + " $$"
     rInfo.innerText = rInfo.innerText + " $$ \\sin(" + tVal + ") = " + JXG.toFixed(yo, 3) + "$$ $$ \\cos(" + tVal + ") =" + JXG.toFixed(xo, 3) + " $$";
     mathJaxClear(rInfo);
 });
@@ -364,7 +365,8 @@ button.addEventListener('click', async function(){
 
 
 //Bolded definitons
-function showDef(def,word){
+function showDef(defS,word){
+    let def = document.getElementById(defS);
     def.style.display = 'block';
     def.style.position = 'absolute';
     node.style.left = word.screenX;
@@ -372,7 +374,9 @@ function showDef(def,word){
 }
 
 function findDef(node){
-    
+    if(node.innerText == "radians") {
+        showDef("radians", node);
+    }
 }
 
 var defs = document.getElementsByClassName('info');
