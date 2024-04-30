@@ -39,3 +39,11 @@ h2{
     position: relative;
     font-weight: bold;
 }
+#binary {
+    border:1px solid black;
+}
+td{
+    margin:0px;
+    padding:3px;
+    border: 1px solid black;
+}
