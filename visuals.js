@@ -107,6 +107,66 @@ var vtt = vOverT.create('line', [[function(){return dtg.X()},0],[function(){retu
 
 var slopeText = dOverT.create('text', [5,3, function(){return "Slope:"+JXG.toFixed(dtt.getSlope(),2);}]);
 
+var labelD = dOverT.create('text', [0.5, 9.5, "Distance"]);
+var labelV = vOverT.create('text', [0.5, 9.5, "Velocity"]);
+var labelT1 = dOverT.create('text', [8, 0.5, "Time"]);
+var labelT2 = vOverT.create('text', [7, 0.5, "Time"]);
+
+//nth Derivative
+var d0 = JXG.JSXGraph.initBoard('d0', {
+    boundingBox:[-1,10,8,-1],
+    axis:true,
+    keepaspectratio:true,
+    showCopyright: false,
+    showNavigation: false
+});
+var d1 = JXG.JSXGraph.initBoard('d1', {
+    boundingBox:[-1,10,8,-1],
+    axis:true,
+    keepaspectratio:true,
+    showCopyright: false,
+    showNavigation: false
+});
+var d2 = JXG.JSXGraph.initBoard('d2', {
+    boundingBox:[-1,10,8,-1],
+    axis:true,
+    keepaspectratio:true,
+    showCopyright: false,
+    showNavigation: false
+});
+var d3 = JXG.JSXGraph.initBoard('d3', {
+    boundingBox:[-1,10,8,-1],
+    axis:true,
+    keepaspectratio:true,
+    showCopyright: false,
+    showNavigation: false
+});
+
+d0.addChild(d1);
+d1.addChild(d2);
+d2.addChild(d3);
+
+var d0curve = d0.create('functiongraph',[function(x){
+    return -5+(13.06667*x)-(9.716667*(x**2))+(2.933333*(x**3))-(0.2833333*(x**4));
+}],{createPoints: false, strokeWidth:'2', highlight:false});
+var d1curve = d1.create('derivative', [d0curve], {strokeWidth:'2',highlight:false});
+var d2curve = d2.create('derivative', [d1curve], {strokeWidth:'2',highlight:false});
+var d3curve = d3.create('functiongraph', [function(x){
+    return (-6.8*x)+17.4;
+}], {strokeWidth:'2',highlight:false});
+
+var d0g = d0.create('glider', [1,1,d0curve],{name:' '});
+var d0t = d0.create('tangent',[d0g],{strokeWidth:'1',dash:'2'});
+var d1t = d1.create('line', [[function(){return d0g.X()},0],[function(){return d0g.X()},5]],{name:' ',fixed:true,createPoints:false,strokeWidth:'1',dash:'2'});
+
+var d0slopeText = d0.create('text', [0.5,5, function(){return "Slope:"+JXG.toFixed(d0t.getSlope(),2);}]);
+
+var labelD0 = d0.create('text', [0.5, 9.5, "Distance"]);
+var labelD1 = d1.create('text', [0.5, 9.5, "Velocity"]);
+
+var labelT3 = d0.create('text', [6, 0.5, "Time"]);
+var labelT4 = d1.create('text', [6, 0.5, "Time"]);
+
 //Taylor series
 var taylor = JXG.JSXGraph.initBoard('taylor', {
     boundingBox:[-8,3,8,-3],
