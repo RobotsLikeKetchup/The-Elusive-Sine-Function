@@ -143,8 +143,8 @@ var d3 = JXG.JSXGraph.initBoard('d3', {
 });
 
 d0.addChild(d1);
-d1.addChild(d2);
-d2.addChild(d3);
+d0.addChild(d2);
+d0.addChild(d3);
 
 var d0curve = d0.create('functiongraph',[function(x){
     return -5+(13.06667*x)-(9.716667*(x**2))+(2.933333*(x**3))-(0.2833333*(x**4));
@@ -158,14 +158,19 @@ var d3curve = d3.create('functiongraph', [function(x){
 var d0g = d0.create('glider', [1,1,d0curve],{name:' '});
 var d0t = d0.create('tangent',[d0g],{strokeWidth:'1',dash:'2'});
 var d1t = d1.create('line', [[function(){return d0g.X()},0],[function(){return d0g.X()},5]],{name:' ',fixed:true,createPoints:false,strokeWidth:'1',dash:'2'});
+var d2t = d2.create('line', [[function(){return d0g.X()},0],[function(){return d0g.X()},5]],{name:' ',fixed:true,createPoints:false,strokeWidth:'1',dash:'2'});
+var d3t = d3.create('line', [[function(){return d0g.X()},0],[function(){return d0g.X()},5]],{name:' ',fixed:true,createPoints:false,strokeWidth:'1',dash:'2'});
 
-var d0slopeText = d0.create('text', [0.5,5, function(){return "Slope:"+JXG.toFixed(d0t.getSlope(),2);}]);
 
 var labelD0 = d0.create('text', [0.5, 9.5, "Distance"]);
 var labelD1 = d1.create('text', [0.5, 9.5, "Velocity"]);
+var labelD2 = d2.create('text', [0.5, 9.5, "Acceleration"]);
+var labelD3 = d3.create('text', [1.5, 9.5, "Jerk"]);
 
 var labelT3 = d0.create('text', [6, 0.5, "Time"]);
 var labelT4 = d1.create('text', [6, 0.5, "Time"]);
+var labelT5 = d2.create('text', [6, 0.5, "Time"]);
+var labelT6 = d3.create('text', [6, 0.5, "Time"]);
 
 //Taylor series
 var taylor = JXG.JSXGraph.initBoard('taylor', {
